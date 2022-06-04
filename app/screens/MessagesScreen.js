@@ -1,7 +1,8 @@
-import { FlatList, SafeAreaView, StyleSheet} from 'react-native'
+import { FlatList, SafeAreaView, StyleSheet, Platform, } from 'react-native'
 import React from 'react'
 
 import ListItem from '../component/ListItem'
+import { StatusBar } from 'expo-status-bar'
 
 const messages =[{
     id: 1,
@@ -13,18 +14,18 @@ const messages =[{
     title:'T2',
     description:'D2',
     image: require('../assets/mosh.jpeg'),
-    
-}]
+    },
+];
 
 function MessagesScreen(props) {
   return (
-    <SafeAreaView>
+    <SafeAreaView style={styles.screen}>
         <FlatList
         data={messages}
         keyExtractor={message => message.id.toString()}
         renderItem={ ({item})=> 
             <ListItem
-                title={item.titles}
+                title={item.title}
                 subTitle={item.description}
                 image={item.image}
             />} 
@@ -34,4 +35,9 @@ function MessagesScreen(props) {
   )
 }
 
+const styles = StyleSheet.create({
+    screen:{
+        paddingTop: Platform.OS === 'android' ? StatusBar.currentHeight : 0 
+    }
+})
 export default MessagesScreen;
